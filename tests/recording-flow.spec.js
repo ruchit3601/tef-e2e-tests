@@ -28,7 +28,7 @@ test('recording flow shows transcript and score feedback', async ({ page }) => {
             grammarScore: 6,
             vocabScore: 7,
             taskAdequacyScore: 7,
-            corrections: ["string", "string"],
+            corrections: ["je suis tane", "je suis allé"],
             overallFeedback: "Good job!",
         }),
     });
@@ -39,8 +39,15 @@ test('recording flow shows transcript and score feedback', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Stop Recording' })).toBeVisible();
   await page.getByRole('button', { name: 'Stop Recording' }).click();
 
+
   // YOU write 2-3 expect() checks here confirming the transcript text
   // and at least one score line (e.g. "Grammar: 7/10") appear on the page.
-  await expect(page.getByText('Hier ist mein Text.')).toBeVisible();
-  await expect(page.getByText(/Grammar.*6/)).toBeVisible();
+   // Assertions: confirm the mocked data actually rendered
+  await expect(page.getByText("Décrivez votre dernière journée de travail")).toBeVisible();
+  await expect(page.getByText('Grammar: 6/10')).toBeVisible();
+  await expect(page.getByText('Vocabulary: 7/10')).toBeVisible();
+  await expect(page.getByText('Task Adequacy: 7/10')).toBeVisible();
+  await expect(page.getByText('Good job!')).toBeVisible();
+  await expect(page.getByText('je suis tane')).toBeVisible();
+  await expect(page.getByText('je suis allé')).toBeVisible();
 });
